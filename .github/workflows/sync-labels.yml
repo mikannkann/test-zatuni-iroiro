@@ -8,9 +8,9 @@ on:
   push:
     branches:
       - main
-    # 監視対象のファイルを .yml に変更
     paths:
       - ".github/labels.yml"
+  workflow_dispatch:
 
 jobs:
   label-sync:
