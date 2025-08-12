@@ -35,13 +35,13 @@
   description: "最優先で対応すべき致命的な問題"
 - name: "priority: must"
   color: "fbca04"
-  description: "リリースに必須な対応"
+  description: "リリースに必須な機能や修正"
 - name: "priority: should"
   color: "fef2c0"
-  description: "対応が強く推奨される改善"
+  description: "対応が推奨される改善"
 - name: "priority: could"
   color: "f7f7f7"
-  description: "対応が任意なタスクや改善"
+  description: "必須ではないが望ましい改善"
 
 # Need: issueを進める上で必要なアクション
 - name: "need: attention"
