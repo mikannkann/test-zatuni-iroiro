@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-const a = ; // 構文エラー
 </script>
 
 <template>
@@ -18,8 +17,7 @@ const a = ; // 構文エラー
     </div>
   </header>
 
-  <RouterView >
-  <div>未閉じタグ
+  <RouterView />
 </template>
 
 <style scoped>
