@@ -1,0 +1,31 @@
+name: Sync Labels
+
+# ワークフローが実行されるタイミングを定義
+on:
+  push:
+    branches:
+      - main # mainブランチにpushされたときのみ実行
+    paths:
+      - ".github/labels.json" # labels.jsonが変更されたときのみ実行
+
+jobs:
+  label-sync:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. リポジトリのコードをチェックアウトする
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. ラベルを同期する
+      #    - crazy-max/ghaction-github-labeler を利用
+      - name: Sync repository labels
+        uses: crazy-max/ghaction-github-labeler@v5
+        with:
+          # ラベル定義ファイルのパス
+          label-file: .github/labels.json
+          # GitHubの操作に必要なトークン
+          # GITHUB_TOKENはActions実行時に自動的に付与される
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # YAMLファイルに定義されていないラベルを削除したくない場合は true
+          # falseにすると、labels.jsonにないラベルはリポジトリから削除される
+          skip-delete: true
