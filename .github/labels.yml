@@ -1,19 +1,19 @@
-- name: enhancement
+- name: "✨ enhancement"
   color: a2eeef
   description: New feature or request
 
-- name: bug
+- name: "🐛 bug"
   color: d73a4a
   description: Something isn't working
 
-- name: documentation
+- name: "📚 documentation"
   color: 0075ca
   description: Improvements or additions to documentation
 
-- name: question
-  color: d876e3
-  description: Further information is requested
-
-- name: good first issue
+- name: "🎉 good first issue"
   color: 7057ff
   description: Good for newcomers
+
+- name: "🏷️ new tag test!"
+  color: f9d0c4
+  description: Test label for new tags
