@@ -18,7 +18,7 @@ linters-settings:
       - name: error-return
       - name: bans
         arguments:
-          - "fmt\.Print(f|ln)?$"
+          - "fmt\\\\.Print(f|ln)?$"
       - name: package-comments
         disabled: true
   gci:
