@@ -1,0 +1,14 @@
+name: Reusable Backend CI
+
+on:
+  workflow_call:
+
+jobs:
+  dummy-check:
+    name: Backend Lint and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run dummy backend check
+        run: |
+          echo "Future backend checks will run here."
+          echo "✅ Backend check passed (dummy)."
