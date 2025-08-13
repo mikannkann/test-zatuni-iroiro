@@ -23,6 +23,8 @@ gonew github.com/ras0q/go-backend-template {{ project_name }}
 Linter, Formatterには[golangci-lint](https://golangci-lint.run/)を使っています。
 VSCodeを使用する場合は`.vscode/settings.json`でLinterの設定を行ってください
 
+test!
+
 ```json
 {
   "go.lintTool": "golangci-lint"
