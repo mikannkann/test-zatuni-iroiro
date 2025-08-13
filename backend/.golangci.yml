@@ -63,7 +63,6 @@ linters:
     - errcheck
     - gosimple
     - ineffassign
-    - typecheck
     - unused
     - misspell
     - nlreturn
