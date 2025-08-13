@@ -21,7 +21,11 @@ func main() {
 	if err != nil {
 		e.Logger.Fatal(err)
 	}
-	defer db.Close()
+	defer func() {
+		if err := db.Close(); err != nil {
+			e.Logger.Error("failed to close db: ", err)
+		}
+	}()
 
 	s := server.Inject(db)
 
