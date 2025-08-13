@@ -8,7 +8,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # 変更されたパスを検知するジョブ
   changes:
     name: Detect Changes
     runs-on: ubuntu-latest
@@ -35,7 +34,6 @@ jobs:
   frontend-ci:
     name: Frontend CI
     needs: changes
-    # frontend に変更があった場合のみ実行
     if: needs.changes.outputs.frontend == 'true'
     uses: ./.github/workflows/reusable-frontend-ci.yml
     # secrets を渡す場合はここに記述
@@ -45,17 +43,14 @@ jobs:
   backend-ci:
     name: Backend CI
     needs: changes
-    # backend に変更があった場合のみ実行
     if: needs.changes.outputs.backend == 'true'
     uses: ./.github/workflows/reusable-backend-ci.yml
 
   # 必須チェックとして登録するためのジョブ
   required-checks:
     name: Required Checks
-    # frontend-ci, backend-ci の実行が終わるのを待つ
     needs: [frontend-ci, backend-ci]
     runs-on: ubuntu-latest
-    # いずれかのCIが失敗したとしても、このジョブ自体は必ず実行する
     if: always()
     steps:
       - name: Verify CI results
