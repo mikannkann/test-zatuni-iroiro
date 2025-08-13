@@ -1,23 +1,113 @@
-version: "2"
+version: 2
+
+run:
+  timeout: 5m
+  go: "1.24"
+  modules-download-mode: readonly
+
+output:
+  sort-results: true
+
+linters-settings:
+  revive:
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: indent-error-flow
+      - name: errorf
+      - name: var-naming
+      - name: exported
+        arguments:
+          - disableStutteringCheck
+      - name: receiver-naming
+      - name: time-naming
+      - name: error-return
+      - name: bans
+        arguments:
+          - "fmt\\.Print(f|ln)?$"
+      - name: package-comments
+        disabled: true
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/traP-jp/1m25_10/backend)
+    skip-generated: true
+  gofumpt:
+    extra-rules: true
+  gocyclo:
+    min-complexity: 15
+  dupl:
+    threshold: 150
+  misspell:
+    locale: US
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: false
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  nlreturn:
+    block-size: 3
+  staticcheck:
+    checks: ["all"]
+
 linters:
+  disable-all: false
+  fast: false
   enable:
-    - nlreturn
+    - govet
+    - staticcheck
     - revive
-  exclusions:
-    generated: lax
-    presets:
-      - comments
-      - common-false-positives
-      - legacy
-      - std-error-handling
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
-formatters:
-  exclusions:
-    generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
+    - errcheck
+    - gosimple
+    - ineffassign
+    - typecheck
+    - unused
+    - misspell
+    - nlreturn
+    - gofumpt
+    - gci
+    - exportloopref
+    - prealloc
+    - unconvert
+    - unparam
+    - gocyclo
+    - dupl
+
+issues:
+  exclude-use-default: false
+  max-same-issues: 3
+  max-issues-per-linter: 0
+  new: true
+  exclude-rules:
+    - path: _test\.go
+      linters: [revive]
+      text: "should have comment"
+    - linters: [revive]
+      text: "package comment should be of the form"
+    - path: pkg/database/migration.go
+      linters: [revive]
+      text: "blank identifier"
+    - linters: [dupl]
+      text: "duplicate of"
+    - linters: [gocyclo]
+      text: "function is too complex"
+
+  severity:
+    default-severity: warning
+    rules:
+      - linters: [errcheck, govet, staticcheck]
+        severity: error
+
+service:
+  golangci-lint-version: 1.60.x
+  prepare:
+    - echo "Running golangci-lint with backend config"
+
+# roadmap:
+#  - enable revive.package-comments
+#  - tighten dupl/gocyclo thresholds
+#  - add gosec
+#  - depguard for database/sql direct usage
