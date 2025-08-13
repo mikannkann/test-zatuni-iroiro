@@ -3,6 +3,11 @@ name: Backend CI
 on:
   workflow_call:
   workflow_dispatch:
+    inputs:
+      enable-lint:
+        description: 'Lintを有効にするかどうか'
+        required: false
+        default: 'true'
 
 defaults:
   run:
@@ -25,6 +30,7 @@ jobs:
         run: go mod tidy
 
       - name: Lint (golangci-lint)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.enable-lint == 'true' || github.event_name != 'workflow_dispatch' }}
         uses: golangci/golangci-lint-action@v8.0.0
         with:
           working-directory: backend

@@ -3,6 +3,11 @@ name: Frontend CI
 on:
   workflow_call:
   workflow_dispatch:
+    inputs:
+      enable-lint:
+        description: 'Lintを有効にするかどうか'
+        required: false
+        default: 'true'
 
 defaults:
   run:
@@ -27,9 +32,11 @@ jobs:
         run: npm ci
 
       - name: Format Check
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.enable-lint == 'true' || github.event_name != 'workflow_dispatch' }}
         run: npm run format:check
 
       - name: Lint Check
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.enable-lint == 'true' || github.event_name != 'workflow_dispatch' }}
         run: npm run lint:ci
 
       - name: Build
