@@ -5,49 +5,6 @@ run:
   go: "1.24"
   modules-download-mode: readonly
 
-linters-settings:
-  revive:
-    ignore-generated-header: true
-    rules:
-      - name: indent-error-flow
-      - name: errorf
-      - name: var-naming
-      - name: exported
-        arguments:
-          - disableStutteringCheck
-      - name: receiver-naming
-      - name: time-naming
-      - name: error-return
-      - name: bans
-        arguments:
-          - "fmt\\\\.Print(f|ln)?$"
-      - name: package-comments
-        disabled: true
-  gci:
-    sections:
-      - standard
-      - default
-      - prefix(github.com/traP-jp/1m25_10/backend)
-    skip-generated: true
-  gofumpt:
-    extra-rules: true
-  gocyclo:
-    min-complexity: 15
-  dupl:
-    threshold: 150
-  misspell:
-    locale: US
-  prealloc:
-    simple: true
-    range-loops: true
-    for-loops: false
-  errcheck:
-    check-type-assertions: true
-    check-blank: true
-  nlreturn:
-    block-size: 3
-  staticcheck:
-    checks: ["all"]
 
 linters:
   enable:
@@ -72,10 +29,3 @@ linters:
 issues:
   max-same-issues: 3
   max-issues-per-linter: 0
-  new: true
-
-# roadmap:
-#  - enable revive.package-comments
-#  - tighten dupl/gocyclo thresholds
-#  - add gosec
-#  - depguard for database/sql direct usage
