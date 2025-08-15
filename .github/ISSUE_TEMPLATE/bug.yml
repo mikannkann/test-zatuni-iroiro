@@ -1,68 +1,67 @@
-name: "不具合報告 (Bug Report)"
-description: "機能が設計通りに動作しない問題を報告します。"
+name: "Bug"
+description: "機能が設計通りに動作しない問題を報告"
 title: "[Bug] "
 labels: ["type: bug"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        不具合のご報告ありがとうございます！
-        問題の特定と解決を早めるため、以下の項目について詳しく教えてください。
+
   - type: textarea
     id: overview
     attributes:
-      label: "概要 (Overview)"
-      description: "どのような不具合ですか？"
-      placeholder: "例：ログインボタンをクリックしても何も反応しない"
-    validations:
-      required: true
-  - type: dropdown
-    id: priority
-    attributes:
-      label: "優先度 (Priority)"
-      description: "この issue の優先度を選択してください。"
-      options:
-        - "priority: critical - 最優先で対応すべき"
-        - "priority: must - これがないとリリースできない"
-        - "priority: should - 品質向上のために対応が推奨"
-        - "priority: could - 必須ではない"
-    validations:
-      required: true
-  - type: dropdown
-    id: area
-    attributes:
-      label: "関連領域 (Area)"
-      description: "この issue が関連する領域を選択してください。"
-      multiple: true
-      options:
-        - "area: frontend"
-        - "area: backend"
-        - "area: design"
-        - "area: docs"
-        - "area: infra"
-  - type: textarea
-    id: steps-to-reproduce
-    attributes:
-      label: "再現手順"
-      description: "この不具合を再現させるための具体的な手順を教えてください。"
+      label: "Overview"
+      description: "どのような不具合なのか、簡潔な概要"
       placeholder: |
-        1. '...' にアクセスする
-        2. '....' をクリックする
-        3. '....' までスクロールする
-        4. エラーが発生する
+        ex. ログインボタンをクリックしても何も反応しない
     validations:
       required: true
+        
   - type: textarea
-    id: details
+    id: expected-behavior
     attributes:
-      label: "詳細 (Details)"
-      description: "期待される動作、実際の動作、スクリーンショット、エラーログなど、問題解決に役立つ情報を記入してください。"
-  - type: checkboxes
-    id: tasks
+      label: "Expected Behavior"
+      description: "どのように動作することを期待していたか"
+      placeholder: |
+        ex. ログインボタンをクリックすると、ダッシュボードにリダイレクトされる
+    validations:
+      required: true
+
+  # - type: textarea
+  #   id: actual-behavior
+  #   attributes:
+  #     label: "Actual Behavior"
+  #     description: "実際の動作はどうか"
+  #     placeholder: |
+  #       ex. ログインボタンをクリックしても何も反応しない
+  #   validations:
+  #     required: true
+
+  - type: textarea
+    id: reproduction-info
     attributes:
-      label: "タスクリスト (Tasks)"
-      description: "この不具合を修正するために必要な作業をリストアップしてください。"
-      options:
-        - label: "原因の調査"
-        - label: "修正コードの実装"
-        - label: "テストの追加"
+      label: "Reproduction"
+      description: "この不具合を再現するための条件や手順がわかっていれば"
+      placeholder: |
+        #### 条件
+        
+        ...という条件で再現性がある
+
+        #### 手順
+
+        1. `....` にアクセスする
+        2. `....` をクリックする
+        3. `....` までスクロールする
+
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: "Suggested Fix"
+      description: "この不具合に対する推奨する解決策"
+      placeholder: |
+        ex. ログインボタンのクリックイベントが正しく設定されていない
+
+  - type: textarea
+    id: references
+    attributes:
+      label: "References"
+      description: "参考情報や、関連情報等あれば"
+      placeholder: |
+        - #123

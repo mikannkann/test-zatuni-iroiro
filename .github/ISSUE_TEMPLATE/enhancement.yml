@@ -1,6 +1,6 @@
 name: "Enhancement"
 description: "新しい機能や既存機能の改善を提案"
-title: "feat: "
+title: "[Enhancement] "
 labels: ["type: enhancement"]
 
 body:
@@ -11,7 +11,7 @@ body:
       label: "Overview"
       description: "どのような機能改善をしたいか、簡潔な概要"
       placeholder: |
-        例: ユーザーがCSVでデータをエクスポートできる機能の実装
+        ex. ユーザーがCSVでデータをエクスポートできる機能の実装
     validations:
       required: true
 
@@ -19,7 +19,7 @@ body:
     id: acceptance-criteria
     attributes:
       label: "Acceptance Criteria"
-      description: "完了がわかりにくいタスクや大きなタスクなら、完了の基準"
+      description: "完了の基準"
       placeholder: |
         - [ ] 画面にCSVダウンロードボタンが表示される
         - [ ] ダウンロードしたCSVにA, B, Cの列が含まれている
@@ -28,7 +28,7 @@ body:
     id: dev-tasks
     attributes:
       label: "Tasks"
-      description: "複雑な作業なら、タスクを分割"
+      description: "タスクを分割"
       placeholder: |
         - [ ] タスク1
         - [ ] タスク2
