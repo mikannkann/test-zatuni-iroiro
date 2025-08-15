@@ -1,55 +1,81 @@
-name: "機能追加・改善 (Enhancement)"
-description: "新しい機能の提案や、既存機能の改善を起票します。"
-title: "[Enhancement] "
-labels: ["type: enhancement"]
+name: "Enhancement"
+description: "新しい機能や既存機能の改善を提案"
+title: "feat: "
+labels: [
+  "type: enhancement",
+  "area: ${{ inputs.area }}",
+  "priority: ${{ inputs.priority }}",
+  "need: ${{ inputs.need }}"
+  ]
+  
 body:
-  - type: markdown
-    attributes:
-      value: |
-        新機能や機能改善に関する提案をありがとうございます！
-        以下の項目を記入してください。
   - type: textarea
     id: overview
     attributes:
-      label: "概要 (Overview)"
-      description: "この issue で何を実現したいですか？"
-      placeholder: "例：ユーザーが CSV でデータをエクスポートできるようにする"
+      label: "Overview / 提案の概要"
+      description: "どのような機能改善をしたいかの概要を簡潔に記入してください。"
+      value: |
+        例：ユーザーがCSVでデータをエクスポートできるようにする
     validations:
       required: true
+
+  - type: checkboxes
+    id: area-labels
+    attributes:
+      label: "Area / 関連領域"
+      description: "この提案が関連する領域をすべて選択してください。"
+      options:
+        - label: "design"
+        - label: "frontend"
+        - label: "backend"
+        - label: "docs"
+        - label: "infra"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: need-labels
+    attributes:
+      label: "Need / 必要なアクション"
+      description: "この提案を完了するために必要なアクションをすべて選択してください。"
+      options:
+        - label: "attention"
+        - label: "discussion"
+        - label: "research"
+        - label: "tasks"
+        - label: "help"
+        - label: "expert help"
+
   - type: dropdown
     id: priority
     attributes:
-      label: "優先度 (Priority)"
-      description: "この issue の優先度を選択してください。"
+      label: "Priority / 優先度"
+      description: |
+        このタスクの優先度を選択してください。
+        - critical: 最優先で対応すべき
+        - must: リリースに必須
+        - should: 対応が推奨される改善
+        - could: 必須ではない改善
       options:
-        - "priority: critical - 最優先で対応すべき"
-        - "priority: must - これがないとリリースできない"
-        - "priority: should - 品質向上のために対応が推奨"
-        - "priority: could - 必須ではない"
+        - "critical"
+        - "must"
+        - "should"
+        - "could"
     validations:
       required: true
-  - type: dropdown
-    id: area
-    attributes:
-      label: "関連領域 (Area)"
-      description: "この issue が関連する領域を選択してください。"
-      multiple: true
-      options:
-        - "area: frontend"
-        - "area: backend"
-        - "area: design"
-        - "area: docs"
-        - "area: infra"
-  - type: checkboxes
-    id: tasks
-    attributes:
-      label: "タスクリスト (Tasks)"
-      description: "この issue を完了するために必要な作業をリストアップしてください。"
-      options:
-        - label: "例：API の設計"
-        - label: "例：フロントエンドの実装"
+
   - type: textarea
-    id: details
+    id: additional-context
     attributes:
-      label: "詳細 (Details)"
-      description: "なぜこの機能が必要なのか、背景や仕様案、参考情報などがあれば記入してください。"
+      label: "Additional Context / 補足情報"
+      description: "スクリーンショット、Figmaのリンク、関連するIssueなど、参考になる情報があれば"
+      value: "特になし"
+
+  - type: textarea
+    id: dev-tasks
+    attributes:
+      label: "Tasks / タスク"
+      description: "作業で必要なら、タスクリストを活用してください。"
+      value: |
+        ### 開発チェックリスト
+        - [x] Issueの作成
