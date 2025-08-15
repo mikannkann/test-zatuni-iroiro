@@ -2,7 +2,7 @@ name: Comment out `_No response_` sections on issues
 
 on:
   issues:
-    types: [opened, edited]
+    types: [opened]
 
 permissions:
   issues: write
