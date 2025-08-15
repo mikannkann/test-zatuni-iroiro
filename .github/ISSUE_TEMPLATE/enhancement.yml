@@ -14,6 +14,16 @@ body:
     validations:
       required: true
 
+  - type: checkboxes
+    id: issue-checklist
+    attributes:
+      label: "Checklist"
+      description: "このIssueの現在のステータスを記入してください"
+      options:
+        - label: "Label付け完了"
+        - label: "何をしたいかが明確"
+        - label: "具体的な作業が可能"
+        
   - type: textarea
     id: implementation-plan
     attributes:
@@ -32,16 +42,6 @@ body:
       placeholder: |
         - [ ] 画面にCSVダウンロードボタンが表示される
         - [ ] ダウンロードしたCSVにA, B, Cの列が含まれている
-
-  - type: checkboxes
-    id: issue-checklist
-    attributes:
-      label: "Checklist"
-      description: "このIssueの現在のステータスを記入してください"
-      options:
-        - label: "Label付け完了"
-        - label: "何をしたいかが明確"
-        - label: "具体的な作業が可能"
 
   - type: textarea
     id: dev-tasks
