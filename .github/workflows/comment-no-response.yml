@@ -14,7 +14,6 @@ jobs:
       - name: Comment out `_No response_` sections
         uses: actions/github-script@v6
         env:
-          # minimum heading level to consider (set to 3 to only target headings like ###)
           MIN_HEADING_LEVEL: '3'
         with:
           script: |
@@ -36,20 +35,18 @@ jobs:
                 const heading = line.match(/^(#{1,6})\s(.*)$/);
                 if (heading) {
                   const level = heading[1].length;
-                  // collect until next heading or end
+                  // collect block until next heading
                   let j = i + 1;
                   const block = [line];
                   while (j < lines.length && !lines[j].match(/^(#{1,6}\s.*)$/)) {
                     block.push(lines[j]);
                     j++;
                   }
-                  // check content after heading
                   const contentLines = lines.slice(i + 1, j);
                   const contentTrim = contentLines.join('\n').trim();
-                  // only act when heading level is at or below configured minimum
+                  // only when heading level >= configured minimum
                   if (level >= MIN_HEADING_LEVEL && contentTrim === '_No response_') {
-                    // wrap the whole block (heading + its lines) in HTML comment
-                    // add an extra newline after the comment so blocks are separated by a blank line
+                    // comment out heading+block and add a blank line after
                     out += '<!--\n' + block.join('\n') + '\n-->\n\n';
                   } else {
                     out += block.join('\n') + (j < lines.length ? '\n' : '');
