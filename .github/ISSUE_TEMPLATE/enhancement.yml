@@ -6,12 +6,9 @@ labels: ["type: enhancement"]
 body:
   - type: markdown
     attributes:
-      label: "Introduction"
       value: |
-        - 全てのセクションを記入する必要はありません
-          - issueの内容や難易度に応じて、必要なセクションのみを記入してください
-        - ラベルをつけていただけると助かります
-          - 自動化やフィルタリングに役立ちます
+        タスクの起票ありがとうございます！
+        以下の項目を記入してください。
 
   - type: textarea
     id: overview
