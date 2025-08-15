@@ -42,7 +42,8 @@ jobs:
                   const contentTrim = contentLines.join('\n').trim();
                   if (contentTrim === '_No response_') {
                     // wrap the whole block (heading + its lines) in HTML comment
-                    out += '<!--\n' + block.join('\n') + '\n-->\n';
+                    // add an extra newline after the comment so blocks are separated by a blank line
+                    out += '<!--\n' + block.join('\n') + '\n-->\n\n';
                   } else {
                     out += block.join('\n') + (j < lines.length ? '\n' : '');
                   }
