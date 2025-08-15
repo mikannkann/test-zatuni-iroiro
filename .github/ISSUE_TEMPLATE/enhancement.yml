@@ -1,81 +1,63 @@
 name: "Enhancement"
 description: "新しい機能や既存機能の改善を提案"
 title: "feat: "
-labels: [
-  "type: enhancement",
-  "area: ${{ inputs.area }}",
-  "priority: ${{ inputs.priority }}",
-  "need: ${{ inputs.need }}"
-  ]
-  
+labels: ["type: enhancement"]
+
 body:
   - type: textarea
     id: overview
     attributes:
       label: "Overview / 提案の概要"
       description: "どのような機能改善をしたいかの概要を簡潔に記入してください。"
-      value: |
-        例：ユーザーがCSVでデータをエクスポートできるようにする
-    validations:
-      required: true
-
-  - type: checkboxes
-    id: area-labels
-    attributes:
-      label: "Area / 関連領域"
-      description: "この提案が関連する領域をすべて選択してください。"
-      options:
-        - label: "design"
-        - label: "frontend"
-        - label: "backend"
-        - label: "docs"
-        - label: "infra"
-    validations:
-      required: true
-
-  - type: checkboxes
-    id: need-labels
-    attributes:
-      label: "Need / 必要なアクション"
-      description: "この提案を完了するために必要なアクションをすべて選択してください。"
-      options:
-        - label: "attention"
-        - label: "discussion"
-        - label: "research"
-        - label: "tasks"
-        - label: "help"
-        - label: "expert help"
-
-  - type: dropdown
-    id: priority
-    attributes:
-      label: "Priority / 優先度"
-      description: |
-        このタスクの優先度を選択してください。
-        - critical: 最優先で対応すべき
-        - must: リリースに必須
-        - should: 対応が推奨される改善
-        - could: 必須ではない改善
-      options:
-        - "critical"
-        - "must"
-        - "should"
-        - "could"
+      placeholder: |
+        例: ユーザーがCSVでデータをエクスポートできる機能の実装
     validations:
       required: true
 
   - type: textarea
-    id: additional-context
+    id: implementation-plan
     attributes:
-      label: "Additional Context / 補足情報"
-      description: "スクリーンショット、Figmaのリンク、関連するIssueなど、参考になる情報があれば"
-      value: "特になし"
+      label: "Implementation Plan / 実装方針"
+      description: "具体的な実装計画や技術的なアプローチを記入してください。"
+      placeholder: |
+        - 〇〇APIエンドポイントを作成する
+        - △△ライブラリを使用してCSVを生成する
+        - □□画面にダウンロードボタンを設置する
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: "Acceptance Criteria / 受け入れ条件"
+      description: "何ができたらこのIssueを完了と見なすかの基準を明確にしてください。"
+      placeholder: |
+        - [ ] 〇〇画面にCSVダウンロードボタンが表示される
+        - [ ] ダウンロードしたCSVにA, B, Cの列が含まれている
+
+  - type: checkboxes
+    id: issue-checklist
+    attributes:
+      label: "Checklist / チェックリスト"
+      description: "このIssueの現在のステータスを記入してください"
+      options:
+        - label: "Issueの作成完了"
+          checked: true
+        - label: "IssueのLabel付け完了"
+        - label: "具体的な作業可能"
 
   - type: textarea
     id: dev-tasks
     attributes:
       label: "Tasks / タスク"
       description: "作業で必要なら、タスクリストを活用してください。"
-      value: |
-        ### 開発チェックリスト
-        - [x] Issueの作成
+      placeholder: |
+        - [ ] タスク1
+        - [ ] タスク2
+
+  - type: textarea
+    id: references
+    attributes:
+      label: "References / 参考情報"
+      description: "スクリーンショット、Figmaのリンク、関連Issue、技術記事など、参考になる情報を貼り付けてください。"
+      placeholder: |
+        - #123
+        - Figma: [Link]
