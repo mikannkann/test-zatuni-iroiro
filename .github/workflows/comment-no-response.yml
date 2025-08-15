@@ -16,7 +16,7 @@ jobs:
         uses: actions/github-script@v6
         env:
           MIN_HEADING_LEVEL: '3'
-          TARGET_HEADING_PATTERN: '^(Implementation Plan|Acceptance Criteria|References)$'
+          TARGET_HEADING_PATTERN: '^(Implementation Plan|Acceptance Criteria|Tasks|References)$'
         with:
           script: |
             const issue = context.payload.issue;
