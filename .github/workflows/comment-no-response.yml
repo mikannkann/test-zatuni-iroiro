@@ -16,6 +16,8 @@ jobs:
         uses: actions/github-script@v6
         env:
           MIN_HEADING_LEVEL: '3'
+          # optional: a single JS regex pattern to match heading text (e.g. "^(Implementation Plan|Acceptance Criteria)$"). Empty = all
+          TARGET_HEADING_PATTERN: ''
         with:
           script: |
             const issue = context.payload.issue;
@@ -26,6 +28,11 @@ jobs:
             const originalBody = issue.body || '';
 
             const MIN_HEADING_LEVEL = Number(process.env.MIN_HEADING_LEVEL) || 3;
+            const TARGET_HEADING_PATTERN_RAW = process.env.TARGET_HEADING_PATTERN || '';
+            let TARGET_HEADING_RE = null;
+            if (TARGET_HEADING_PATTERN_RAW.trim()) {
+              try { TARGET_HEADING_RE = new RegExp(TARGET_HEADING_PATTERN_RAW, 'i'); } catch (e) { core.info(`Invalid TARGET_HEADING_PATTERN ignored: ${TARGET_HEADING_PATTERN_RAW}`); }
+            }
 
             function transform(body) {
               const lines = body.split(/\r?\n/);
@@ -36,6 +43,7 @@ jobs:
                 const heading = line.match(/^(#{1,6})\s(.*)$/);
                 if (heading) {
                   const level = heading[1].length;
+                  const headingText = heading[2].trim();
                   // collect block until next heading
                   let j = i + 1;
                   const block = [line];
@@ -46,7 +54,9 @@ jobs:
                   const contentLines = lines.slice(i + 1, j);
                   const contentTrim = contentLines.join('\n').trim();
                   // only when heading level >= configured minimum
-                  if (level >= MIN_HEADING_LEVEL && contentTrim === '_No response_') {
+                  // and when TARGET_HEADING_NAME is empty or matches this heading text
+                  const targetMatch = !TARGET_HEADING_RE || TARGET_HEADING_RE.test(headingText);
+                  if (level >= MIN_HEADING_LEVEL && targetMatch && contentTrim === '_No response_') {
                     // comment out heading+block and add a blank line after
                     out += '<!--\n' + block.join('\n') + '\n-->\n\n';
                   } else {
