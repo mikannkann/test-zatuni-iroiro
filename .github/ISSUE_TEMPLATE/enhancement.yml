@@ -7,8 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        タスクの起票ありがとうございます！
-        以下の項目を記入してください。
+        - タスクの起票ありがとうございます！
+        - 以下の項目を記入してください。
 
   - type: textarea
     id: overview
