@@ -4,6 +4,16 @@ title: "feat: "
 labels: ["type: enhancement"]
 
 body:
+  - type: markdown
+    attributes:
+    value: |
+      ### Introduction
+
+      - 全てのセクションを記入する必要はありません
+        - issueの内容や難易度に応じて、必要なセクションのみを記入してください
+      - ラベルをつけていただけると助かります
+        - 自動化やフィルタリングに役立ちます
+
   - type: textarea
     id: overview
     attributes:
@@ -50,13 +60,3 @@ body:
       placeholder: |
         - #123
         - Figma: [Link]
-
-  - type: checkboxes
-    id: issue-checklist
-    attributes:
-      label: "Checklist"
-      description: "このIssueの現在のステータスを記入してください"
-      options:
-        - label: "Label付け完了"
-        - label: "何をしたいかが明確"
-        - label: "具体的な作業が可能"
