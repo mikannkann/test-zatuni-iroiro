@@ -7,7 +7,7 @@ body:
   - type: textarea
     id: overview
     attributes:
-      label: "Overview / 提案の概要"
+      label: "Overview"
       description: "どのような機能改善をしたいかの概要を簡潔に記入してください。"
       placeholder: |
         例: ユーザーがCSVでデータをエクスポートできる機能の実装
@@ -17,37 +17,36 @@ body:
   - type: textarea
     id: implementation-plan
     attributes:
-      label: "Implementation Plan / 実装方針"
+      label: "Implementation Plan"
       description: "具体的な実装計画や技術的なアプローチを記入してください。"
       placeholder: |
-        - 〇〇APIエンドポイントを作成する
-        - △△ライブラリを使用してCSVを生成する
-        - □□画面にダウンロードボタンを設置する
+        - APIエンドポイントを作成する
+        - ライブラリを使用してCSVを生成する
+        - 画面にダウンロードボタンを設置する
 
   - type: textarea
     id: acceptance-criteria
     attributes:
-      label: "Acceptance Criteria / 受け入れ条件"
+      label: "Acceptance Criteria"
       description: "何ができたらこのIssueを完了と見なすかの基準を明確にしてください。"
       placeholder: |
-        - [ ] 〇〇画面にCSVダウンロードボタンが表示される
+        - [ ] 画面にCSVダウンロードボタンが表示される
         - [ ] ダウンロードしたCSVにA, B, Cの列が含まれている
 
   - type: checkboxes
     id: issue-checklist
     attributes:
-      label: "Checklist / チェックリスト"
+      label: "Checklist"
       description: "このIssueの現在のステータスを記入してください"
       options:
-        - label: "Issueの作成完了"
-          # checked: true
-        - label: "IssueのLabel付け完了"
-        - label: "具体的な作業可能"
+        - label: "Label付け完了"
+        - label: "何をしたいかが明確"
+        - label: "具体的な作業が可能"
 
   - type: textarea
     id: dev-tasks
     attributes:
-      label: "Tasks / タスク"
+      label: "Tasks"
       description: "作業で必要なら、タスクリストを活用してください。"
       placeholder: |
         - [ ] タスク1
@@ -56,8 +55,8 @@ body:
   - type: textarea
     id: references
     attributes:
-      label: "References / 参考情報"
-      description: "スクリーンショット、Figmaのリンク、関連Issue、技術記事など、参考になる情報を貼り付けてください。"
+      label: "References"
+      description: "参考になる情報や関連情報があれば記入してください。"
       placeholder: |
         - #123
         - Figma: [Link]
