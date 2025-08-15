@@ -7,8 +7,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        - タスクの起票ありがとうございます！
-        - 以下の項目を記入してください。
+        ### Introduction
+        
+        - 全てのセクションを記入する必要はありません
+          issueの内容や難易度に応じて、必要なセクションのみを記入してください
+        
+        - ラベルをつけていただけると助かります
+          自動化やフィルタリングに役立ちます
 
   - type: textarea
     id: overview
