@@ -1,0 +1,54 @@
+name: "リファクタリング (Refactoring)"
+description: "ユーザーから見える動作は変えずに、コードの品質を向上させるための提案です。"
+title: "[Refactor] "
+labels: ["type: refactoring"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        コード品質向上のための提案をありがとうございます！
+  - type: textarea
+    id: overview
+    attributes:
+      label: "概要 (Overview)"
+      description: "どの部分のコードを、どのように改善したいですか？"
+      placeholder: "例：〇〇コンポーネントの責務を分割して見通しを良くする"
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "優先度 (Priority)"
+      description: "この issue の優先度を選択してください。"
+      options:
+        - "priority: should - 品質向上のために対応が推奨"
+        - "priority: could - 必須ではない"
+        - "priority: must - これがないとリリースできない"
+        - "priority: critical - 最優先で対応すべき"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: "関連領域 (Area)"
+      description: "この issue が関連する領域を選択してください。"
+      multiple: true
+      options:
+        - "area: frontend"
+        - "area: backend"
+        - "area: design"
+        - "area: docs"
+        - "area: infra"
+  - type: checkboxes
+    id: tasks
+    attributes:
+      label: "タスクリスト (Tasks)"
+      description: "このリファクタリングを完了するために必要な作業をリストアップしてください。"
+      options:
+        - label: "例：〇〇のロジックを別ファイルに切り出す"
+        - label: "例：不要なコードを削除する"
+  - type: textarea
+    id: details
+    attributes:
+      label: "詳細 (Details)"
+      description: "リファクタリングによるメリット（可読性の向上、パフォーマンス改善など）を具体的に説明してください。"

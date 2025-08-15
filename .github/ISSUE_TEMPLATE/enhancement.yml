@@ -1,0 +1,55 @@
+name: "機能追加・改善 (Enhancement)"
+description: "新しい機能の提案や、既存機能の改善を起票します。"
+title: "[Enhancement] "
+labels: ["type: enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        新機能や機能改善に関する提案をありがとうございます！
+        以下の項目を記入してください。
+  - type: textarea
+    id: overview
+    attributes:
+      label: "概要 (Overview)"
+      description: "この issue で何を実現したいですか？"
+      placeholder: "例：ユーザーが CSV でデータをエクスポートできるようにする"
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "優先度 (Priority)"
+      description: "この issue の優先度を選択してください。"
+      options:
+        - "priority: critical - 最優先で対応すべき"
+        - "priority: must - これがないとリリースできない"
+        - "priority: should - 品質向上のために対応が推奨"
+        - "priority: could - 必須ではない"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: "関連領域 (Area)"
+      description: "この issue が関連する領域を選択してください。"
+      multiple: true
+      options:
+        - "area: frontend"
+        - "area: backend"
+        - "area: design"
+        - "area: docs"
+        - "area: infra"
+  - type: checkboxes
+    id: tasks
+    attributes:
+      label: "タスクリスト (Tasks)"
+      description: "この issue を完了するために必要な作業をリストアップしてください。"
+      options:
+        - label: "例：API の設計"
+        - label: "例：フロントエンドの実装"
+  - type: textarea
+    id: details
+    attributes:
+      label: "詳細 (Details)"
+      description: "なぜこの機能が必要なのか、背景や仕様案、参考情報などがあれば記入してください。"
