@@ -9,27 +9,17 @@ body:
     id: overview
     attributes:
       label: "Overview"
-      description: "どのような機能改善をしたいかの概要を簡潔に記入してください。"
+      description: "どのような機能改善をしたいか、簡潔な概要"
       placeholder: |
         例: ユーザーがCSVでデータをエクスポートできる機能の実装
     validations:
       required: true
-        
-  - type: textarea
-    id: implementation-plan
-    attributes:
-      label: "Implementation Plan"
-      description: "具体的な実装計画や技術的なアプローチを記入してください。"
-      placeholder: |
-        - APIエンドポイントを作成する
-        - ライブラリを使用してCSVを生成する
-        - 画面にダウンロードボタンを設置する
 
   - type: textarea
     id: acceptance-criteria
     attributes:
       label: "Acceptance Criteria"
-      description: "何ができたらこのIssueを完了と見なすかの基準を明確にしてください。"
+      description: "完了がわかりにくいタスクや大きなタスクなら、完了の基準"
       placeholder: |
         - [ ] 画面にCSVダウンロードボタンが表示される
         - [ ] ダウンロードしたCSVにA, B, Cの列が含まれている
@@ -38,7 +28,7 @@ body:
     id: dev-tasks
     attributes:
       label: "Tasks"
-      description: "作業で必要なら、タスクリストを活用してください。"
+      description: "複雑な作業なら、タスクを分割"
       placeholder: |
         - [ ] タスク1
         - [ ] タスク2
@@ -47,7 +37,7 @@ body:
     id: references
     attributes:
       label: "References"
-      description: "参考になる情報や関連情報があれば記入してください。"
+      description: "参考情報や、関連情報等あれば"
       placeholder: |
         - #123
-        - Figma: [Link]
+        - https://www.figma.com/design/...
