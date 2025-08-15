@@ -16,8 +16,7 @@ jobs:
         uses: actions/github-script@v6
         env:
           MIN_HEADING_LEVEL: '3'
-          # optional: a single JS regex pattern to match heading text (e.g. "^(Implementation Plan|Acceptance Criteria)$"). Empty = all
-          TARGET_HEADING_PATTERN: ''
+          TARGET_HEADING_PATTERN: '^(Implementation Plan|Acceptance Criteria|References)$'
         with:
           script: |
             const issue = context.payload.issue;
