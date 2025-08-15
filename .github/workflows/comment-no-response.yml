@@ -1,0 +1,71 @@
+name: Comment out `_No response_` sections on issues
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  comment-no-response:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment out `_No response_` sections
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue;
+            if (!issue) {
+              core.info('No issue payload found.');
+              return;
+            }
+            const originalBody = issue.body || '';
+
+            function transform(body) {
+              const lines = body.split(/\r?\n/);
+              let out = '';
+              let i = 0;
+              while (i < lines.length) {
+                const line = lines[i];
+                const heading = line.match(/^(#{1,6}\s.*)$/);
+                if (heading) {
+                  // collect until next heading or end
+                  let j = i + 1;
+                  const block = [line];
+                  while (j < lines.length && !lines[j].match(/^(#{1,6}\s.*)$/)) {
+                    block.push(lines[j]);
+                    j++;
+                  }
+                  // check content after heading
+                  const contentLines = lines.slice(i + 1, j);
+                  const contentTrim = contentLines.join('\n').trim();
+                  if (contentTrim === '_No response_') {
+                    // wrap the whole block (heading + its lines) in HTML comment
+                    out += '<!--\n' + block.join('\n') + '\n-->\n';
+                  } else {
+                    out += block.join('\n') + (j < lines.length ? '\n' : '');
+                  }
+                  i = j;
+                } else {
+                  out += line + '\n';
+                  i++;
+                }
+              }
+              // remove trailing single newline added above if the original didn't have it
+              if (!body.endsWith('\n') && out.endsWith('\n')) out = out.slice(0, -1);
+              return out;
+            }
+
+            const newBody = transform(originalBody);
+            if (newBody !== originalBody) {
+              core.info('Updating issue body to comment out `_No response_` sections.');
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: newBody,
+              });
+            } else {
+              core.info('No changes required.');
+            }
