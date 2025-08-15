@@ -10,6 +10,7 @@ permissions:
 jobs:
   comment-no-response:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Comment out `_No response_` sections
         uses: actions/github-script@v6
