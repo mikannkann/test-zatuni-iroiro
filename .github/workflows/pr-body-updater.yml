@@ -43,7 +43,7 @@ jobs:
             exit 0
           fi
 
-          NEW_BODY=$(printf "%s\n\n%s" "$CURRENT_BODY" "$CLOSES_TEXT" | sed '/^$/d') # 先頭の余分な改行を削除
+          NEW_BODY=$(printf "%s\n\n%s" "$CURRENT_BODY" "$CLOSES_TEXT" | sed '/^$/d')
 
           echo "Updating PR #${PR_NUMBER} body."
           gh pr edit "$PR_NUMBER" --body "$NEW_BODY"
