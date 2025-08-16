@@ -1,0 +1,39 @@
+name: Auto add 'Closes' to pull request description
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  add-closes-keyword:
+    if: >
+      github.event.pull_request.body == '' &&
+      github.event.pull_request.draft == false &&
+      github.event.action == 'opened'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract issue number from branch name
+        id: extract_issue
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [[ $BRANCH_NAME =~ ^[a-zA-Z0-9]+/([0-9]+)- ]]; then
+            ISSUE_NUMBER=${BASH_REMATCH[1]}
+            echo "Issue number extracted: $ISSUE_NUMBER"
+            echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+          else
+            echo "Branch name '${BRANCH_NAME}' does not follow the expected format '<prefix>/<number>-<description>'."
+            exit 1
+          fi
+
+      - name: Update PR Description
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
+        run: |
+          echo "Updating PR #${PR_NUMBER} with 'Closes #${ISSUE_NUMBER}'"
+          gh pr edit $PR_NUMBER --body "Closes #${ISSUE_NUMBER}"
