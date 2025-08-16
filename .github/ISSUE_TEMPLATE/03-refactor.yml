@@ -7,8 +7,9 @@ body:
     id: overview
     attributes:
       label: "Overview"
-      description: "どの部分のコードを、どのように改善したいか"
-      placeholder: "ex. コンポーネントxの責務を分割して見通しを良くする"
+      description: "どの部分のコードをどのように改善したいか、簡潔な概要"
+      placeholder: |
+        ex. コンポーネントxの責務を分割して見通しを良くする
     validations:
       required: true
 
@@ -17,7 +18,8 @@ body:
     attributes:
       label: "Reason"
       description: "なぜ、改善したいのか"
-      placeholder: "ex. コンポーネントの責務が混在しており、保守性が低いため"
+      placeholder: |
+        ex. コンポーネントの責務が混在しており、保守性が低いため
 
   - type: textarea
     id: suggested-fix
@@ -47,5 +49,6 @@ body:
   - type: textarea
     id: details
     attributes:
-      label: "詳細 (Details)"
-      description: "リファクタリングによるメリット（可読性の向上、パフォーマンス改善など）を具体的に説明してください。"
+      label: "Details"
+      description: |
+        リファクタリングによるメリットを具体的に説明してください。

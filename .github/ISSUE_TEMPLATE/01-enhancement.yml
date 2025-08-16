@@ -4,7 +4,6 @@ title: "[Enhancement] "
 labels: ["type: enhancement", "need: triage"]
 
 body:
-
   - type: textarea
     id: overview
     attributes:

@@ -2,29 +2,40 @@ name: "Epic"
 description: "複数の関連するIssueをまとめるもの"
 title: "[Epic] "
 labels: ["type: epic", "need: triage"]
+
 body:
   - type: textarea
     id: overview
     attributes:
       label: "Overview"
-      description: "このEpicが完了したときに、どのような状態になっているべきかを簡潔に"
+      description: "目的や期待する成果をまとめた、簡潔な概要"
       placeholder: |
-        ex. ユーザーが新しいダッシュボード機能を使えるようになっている
+        ex. ユーザーが新しいダッシュボード機能を使えるようにする
     validations:
       required: true
 
+  # - type: textarea
+  #   id: reason
+  #   attributes:
+  #     label: "Reason"
+  #     description: "なぜ、このEpicが必要なのか"
+  #     placeholder: |
+  #       ex. 既存のダッシュボードでは、ユーザーが必要な情報を一覧できず、UXを損なっているため。
+
   - type: textarea
-    id: reason
+    id: acceptance-criteria
     attributes:
-      label: "Reason"
-      description: "なぜ、このEpicが必要なのか"
-      placeholder: "ex. 既存のダッシュボードでは、ユーザーが必要な情報を一覧できず、UXを損なっているため。"
+      label: "Acceptance Criteria"
+      description: "何をもってこのEpicが完了したと判断するか"
+      placeholder: |
+        - [ ] 新しいダッシュボード機能が、全てのテストを通過して本番環境にデプロイされている
+        - [ ] ユーザーマニュアルが更新されている
 
   - type: textarea
     id: in-scope
     attributes:
       label: "In Scope"
-      description: "このEpicで実施する作業を具体的にリストアップしてください。"
+      description: "このEpicで実施する作業"
       placeholder: |
         - ダッシュボードのUIデザイン実装
         - データ表示のためのAPI開発
@@ -33,36 +44,32 @@ body:
     id: out-of-scope
     attributes:
       label: "Out of Scope"
-      description: "このEpicでは実施しない作業を明記してください。\n関係者間の認識のズレを防ぎます。"
+      description: "このEpicでは実施しない作業\n関係者間の認識のズレを防ぐため"
       placeholder: |
         - ユーザー認証機能の改修
         - PDFエクスポート機能
-        
+
   - type: textarea
     id: related-issues
     attributes:
-      label: "✅ Related Issues / Tasks (関連Issue / タスク)"
-      description: "このEpicを達成するために必要なIssueやタスクをリストアップしてください。"
+      label: "Related Issues"
+      description: "このEpicを達成するために必要なIssueやタスクをリストアップ"
       placeholder: |
-        - #123 (フロントエンドの実装)
-        - #124 (バックエンドAPIの開発)
-        - [ ] デザインカンプの作成
+        #### フロントエンド
 
-  - type: textarea
-    id: definition-of-done
-    attributes:
-      label: "🏁 Definition of Done (完了の定義)"
-      description: "何をもってこのEpicが「完了」したと判断するか、具体的な基準を記述してください。"
-      placeholder: |
-        - [ ] 新しいダッシュボード機能が、全てのテストを通過して本番環境にデプロイされている
-        - [ ] 関係者（プロダクトマネージャー、デザイナーなど）のレビューが完了している
-        - [ ] ユーザーマニュアルが更新されている
+        - #123 ダッシュボードのUI実装
+        - #124 API連携と表示ロジック実装
+
+        #### バックエンド
+
+        - #125 APIの設計
+        - #126 データベースのマイグレーション
 
   - type: textarea
     id: references
     attributes:
       label: "References"
-      description: "関連するドキュメント、Figmaのリンクなどがあれば記述してください。"
+      description: "参考情報や、関連情報等あれば"
       placeholder: |
         - [Figmaデザイン](http://example.com)
         - [要件定義書](http://example.com)

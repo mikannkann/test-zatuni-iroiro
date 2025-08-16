@@ -3,7 +3,6 @@ description: "機能が設計通りに動作しない問題を報告"
 title: "[Bug] "
 labels: ["type: bug", "need: triage"]
 body:
-
   - type: textarea
     id: overview
     attributes:
@@ -13,7 +12,7 @@ body:
         ex. ログインボタンをクリックしても何も反応しない
     validations:
       required: true
-        
+
   - type: textarea
     id: expected-behavior
     attributes:
@@ -34,17 +33,16 @@ body:
     id: reproduction-info
     attributes:
       label: "Reproduction"
-      description: "この不具合を再現するための条件や手順がわかっていれば"
+      description: "この不具合を再現するための条件や手順"
       placeholder: |
         #### 条件
-        
+
         ...という条件で再現性がある
 
         #### 手順
 
         1. `....` にアクセスする
         2. `....` をクリックする
-        3. `....` までスクロールする
 
   - type: textarea
     id: suggested-fix
