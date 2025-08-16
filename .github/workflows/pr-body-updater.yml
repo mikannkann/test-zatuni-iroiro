@@ -11,14 +11,10 @@ jobs:
   add-issue-reference:
     if: >
       github.event.pull_request.body == '' &&
-      github.event.pull_request.draft == false &&
-      github.event.action == 'opened'
+      github.event.pull_request.draft == false
 
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Extract issue number from branch name
         id: extract_issue
         run: |
@@ -28,8 +24,8 @@ jobs:
             echo "Issue number extracted: $ISSUE_NUMBER"
             echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
           else
-            echo "Branch name '${BRANCH_NAME}' does not follow the expected format '<prefix>/<number>-<description>'."
-            exit 1
+            echo "Branch name '${BRANCH_NAME}' does not match pattern, skipping PR update."
+            exit 0
           fi
 
       - name: Update PR Description
