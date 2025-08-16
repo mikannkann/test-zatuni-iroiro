@@ -1,52 +1,49 @@
-name: "リファクタリング (Refactoring)"
-description: "ユーザーから見える動作は変えずに、コードの品質を向上させるための提案です。"
+name: "Refactoring"
+description: "ユーザーから見える動作は変えずに、コードの品質を向上させるための提案"
 title: "[Refactor] "
 labels: ["type: refactoring"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        コード品質向上のための提案をありがとうございます！
   - type: textarea
     id: overview
     attributes:
-      label: "概要 (Overview)"
-      description: "どの部分のコードを、どのように改善したいですか？"
-      placeholder: "例：〇〇コンポーネントの責務を分割して見通しを良くする"
+      label: "Overview"
+      description: "どの部分のコードを、どのように改善したいか"
+      placeholder: "ex. コンポーネントxの責務を分割して見通しを良くする"
     validations:
       required: true
-  - type: dropdown
-    id: priority
+
+  - type: textarea
+    id: reason
     attributes:
-      label: "優先度 (Priority)"
-      description: "この issue の優先度を選択してください。"
-      options:
-        - "priority: should - 品質向上のために対応が推奨"
-        - "priority: could - 必須ではない"
-        - "priority: must - これがないとリリースできない"
-        - "priority: critical - 最優先で対応すべき"
-    validations:
-      required: true
-  - type: dropdown
-    id: area
+      label: "Reason"
+      description: "なぜ、改善したいのか"
+      placeholder: "ex. コンポーネントの責務が混在しており、保守性が低いため"
+
+  - type: textarea
+    id: suggested-fix
     attributes:
-      label: "関連領域 (Area)"
-      description: "この issue が関連する領域を選択してください。"
-      multiple: true
-      options:
-        - "area: frontend"
-        - "area: backend"
-        - "area: design"
-        - "area: docs"
-        - "area: infra"
-  - type: checkboxes
-    id: tasks
+      label: "Suggested Fix"
+      description: "この不具合に対する推奨する解決策"
+      placeholder: |
+        ex. ログインボタンのクリックイベントにエラーがあるので正しく設定する
+
+  - type: textarea
+    id: dev-tasks
     attributes:
-      label: "タスクリスト (Tasks)"
-      description: "このリファクタリングを完了するために必要な作業をリストアップしてください。"
-      options:
-        - label: "例：〇〇のロジックを別ファイルに切り出す"
-        - label: "例：不要なコードを削除する"
+      label: "Tasks"
+      description: "必要ならタスクを分割"
+      placeholder: |
+        - [ ] タスク1
+        - [ ] タスク2
+
+  - type: textarea
+    id: references
+    attributes:
+      label: "References"
+      description: "参考情報や、関連情報等あれば"
+      placeholder: |
+        - #123
+
   - type: textarea
     id: details
     attributes:

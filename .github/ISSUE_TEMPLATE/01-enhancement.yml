@@ -28,7 +28,7 @@ body:
     id: dev-tasks
     attributes:
       label: "Tasks"
-      description: "タスクを分割"
+      description: "必要ならタスクを分割"
       placeholder: |
         - [ ] タスク1
         - [ ] タスク2
