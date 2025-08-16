@@ -31,23 +31,23 @@ body:
         - [ ] 新しいダッシュボード機能が、全てのテストを通過して本番環境にデプロイされている
         - [ ] ユーザーマニュアルが更新されている
 
-  - type: textarea
-    id: in-scope
-    attributes:
-      label: "In Scope"
-      description: "このEpicで実施する作業"
-      placeholder: |
-        - ダッシュボードのUIデザイン実装
-        - データ表示のためのAPI開発
+  # - type: textarea
+  #   id: in-scope
+  #   attributes:
+  #     label: "In Scope"
+  #     description: "このEpicで実施する作業"
+  #     placeholder: |
+  #       - ダッシュボードのUIデザイン実装
+  #       - データ表示のためのAPI開発
 
-  - type: textarea
-    id: out-of-scope
-    attributes:
-      label: "Out of Scope"
-      description: "このEpicでは実施しない作業\n関係者間の認識のズレを防ぐため"
-      placeholder: |
-        - ユーザー認証機能の改修
-        - PDFエクスポート機能
+  # - type: textarea
+  #   id: out-of-scope
+  #   attributes:
+  #     label: "Out of Scope"
+  #     description: "このEpicでは実施しない作業\n関係者間の認識のズレを防ぐため"
+  #     placeholder: |
+  #       - ユーザー認証機能の改修
+  #       - PDFエクスポート機能
 
   - type: textarea
     id: related-issues
