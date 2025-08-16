@@ -9,9 +9,7 @@ permissions:
 
 jobs:
   add-issue-reference:
-    if: >
-      github.event.pull_request.body == '' &&
-      github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false
     timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
@@ -36,15 +34,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          CLOSES_TEXT: "Closes #${{ steps.extract_issue.outputs.issue_number }}"
+          ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
           REPO: ${{ github.repository }}
         run: |
           CURRENT_BODY=$(gh pr view "$PR_NUMBER" --json body --jq .body)
-
-          if [[ "$CURRENT_BODY" == *"$CLOSES_TEXT"* ]]; then
-            echo "PR body already contains '${CLOSES_TEXT}'. No update needed."
-            exit 0
+          
+          if [[ "$CURRENT_BODY" == *"#${ISSUE_NUMBER}"* ]]; then
+          echo "PR body already contains '#${ISSUE_NUMBER}'. No update needed."
+          exit 0
           fi
+          
+          CLOSES_TEXT="Closes #${ISSUE_NUMBER}"
 
           if [ -z "$CURRENT_BODY" ]; then
             UPDATED_BODY="$CLOSES_TEXT"
