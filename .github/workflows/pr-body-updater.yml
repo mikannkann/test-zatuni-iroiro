@@ -33,8 +33,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
+          CLOSES_TEXT: "Closes #${{ steps.extract_issue.outputs.issue_number }}"
           REPO: ${{ github.repository }}
         run: |
-          echo "Updating PR #${PR_NUMBER} with 'Closes #${ISSUE_NUMBER}'"
-          gh pr edit "$PR_NUMBER" --repo "$REPO" --body "Closes #${ISSUE_NUMBER}"
+          CURRENT_BODY=$(gh pr view "$PR_NUMBER" --json body --jq .body)
+
+          if [[ "$CURRENT_BODY" == *"$CLOSES_TEXT"* ]]; then
+            echo "PR body already contains '${CLOSES_TEXT}'. No update needed."
+            exit 0
+          fi
+
+          NEW_BODY=$(printf "%s\n\n%s" "$CURRENT_BODY" "$CLOSES_TEXT" | sed '/^$/d') # 先頭の余分な改行を削除
+
+          echo "Updating PR #${PR_NUMBER} body."
+          gh pr edit "$PR_NUMBER" --body "$NEW_BODY"
