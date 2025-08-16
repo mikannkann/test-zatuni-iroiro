@@ -45,10 +45,3 @@ body:
       description: "参考情報や、関連情報等あれば"
       placeholder: |
         - #123
-
-  - type: textarea
-    id: details
-    attributes:
-      label: "Details"
-      description: |
-        リファクタリングによるメリットを具体的に説明してください。
