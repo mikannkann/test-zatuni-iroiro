@@ -22,15 +22,13 @@ body:
       placeholder: |
         ex. ログインボタンをクリックすると、ダッシュボードにリダイレクトされる
 
-  # - type: textarea
-  #   id: actual-behavior
-  #   attributes:
-  #     label: "Actual Behavior"
-  #     description: "実際の動作はどうか"
-  #     placeholder: |
-  #       ex. ログインボタンをクリックしても何も反応しない
-  #   validations:
-  #     required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "Actual Behavior"
+      description: "実際の動作はどうか"
+      placeholder: |
+        ex. ログインボタンをクリックしても何も反応しない
 
   - type: textarea
     id: reproduction-info
@@ -54,7 +52,7 @@ body:
       label: "Suggested Fix"
       description: "この不具合に対する推奨する解決策"
       placeholder: |
-        ex. ログインボタンのクリックイベントが正しく設定されていない
+        ex. ログインボタンのクリックイベントにエラーがあるので正しく設定する
 
   - type: textarea
     id: references
