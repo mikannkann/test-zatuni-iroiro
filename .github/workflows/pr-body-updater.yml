@@ -40,8 +40,8 @@ jobs:
           CURRENT_BODY=$(gh pr view "$PR_NUMBER" --json body --jq .body)
           
           if [[ "$CURRENT_BODY" == *"#${ISSUE_NUMBER}"* ]]; then
-          echo "PR body already contains '#${ISSUE_NUMBER}'. No update needed."
-          exit 0
+            echo "PR body already contains '#${ISSUE_NUMBER}'. No update needed."
+            exit 0
           fi
           
           CLOSES_TEXT="Closes #${ISSUE_NUMBER}"
