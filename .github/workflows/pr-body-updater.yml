@@ -46,7 +46,11 @@ jobs:
             exit 0
           fi
 
-          NEW_BODY=$(printf "%s\n\n%s" "$CURRENT_BODY" "$CLOSES_TEXT" | sed '/^$/d')
+          if [ -z "$CURRENT_BODY" ]; then
+            UPDATED_BODY="$CLOSES_TEXT"
+          else
+            UPDATED_BODY="${CURRENT_BODY}\n\n${CLOSES_TEXT}"
+          fi
 
           echo "Updating PR #${PR_NUMBER} body."
-          gh pr edit "$PR_NUMBER" --body "$NEW_BODY"
+          gh pr edit "$PR_NUMBER" --body "$UPDATED_BODY"
