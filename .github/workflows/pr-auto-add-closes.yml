@@ -1,4 +1,4 @@
-name: Auto add 'Closes' to pull request description
+name: PR body updater
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  add-closes-keyword:
+  add-issue-reference:
     if: >
       github.event.pull_request.body == '' &&
       github.event.pull_request.draft == false &&
@@ -31,9 +31,10 @@ jobs:
 
       - name: Update PR Description
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
+          REPO: ${{ github.repository }}
         run: |
           echo "Updating PR #${PR_NUMBER} with 'Closes #${ISSUE_NUMBER}'"
-          gh pr edit $PR_NUMBER --body "Closes #${ISSUE_NUMBER}"
+          gh pr edit "$PR_NUMBER" --repo "$REPO" --body "Closes #${ISSUE_NUMBER}"
