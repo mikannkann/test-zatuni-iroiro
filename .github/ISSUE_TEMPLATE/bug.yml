@@ -21,8 +21,6 @@ body:
       description: "どのように動作することを期待していたか"
       placeholder: |
         ex. ログインボタンをクリックすると、ダッシュボードにリダイレクトされる
-    validations:
-      required: true
 
   # - type: textarea
   #   id: actual-behavior
