@@ -49,14 +49,37 @@ jobs:
         with:
           go-version: 1.24
 
+      - name: Dump Go environment and workspace (debug)
+        id: go-env
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Listing repo root"
+          ls -la
+          echo "Listing backend dir"
+          ls -la backend || true
+          echo "backend/go.sum exists: " $( [ -f backend/go.sum ] && echo yes || echo no )
+          echo "go version: $(go version)"
+          echo "GOMOD: $(go env GOMOD)"
+          echo "GOMODCACHE: $(go env GOMODCACHE)"
+          echo "GOCACHE: $(go env GOCACHE)"
+          # expose values as step outputs for later steps
+          echo "gomodcache=$(go env GOMODCACHE)" >> $GITHUB_OUTPUT
+          echo "gocache=$(go env GOCACHE)" >> $GITHUB_OUTPUT
+
+      - name: Debug computed cache key
+        run: |
+          echo "hashFiles('backend/go.sum') = '${{ hashFiles('backend/go.sum') }}'"
+          echo "Computed key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}"
+
       - name: Cache Go modules
+        id: cache
         uses: actions/cache@v4
         with:
           path: |
             ~/.cache/go-build
-            # GOMODCACHE default
-            ${{ env.GOMODCACHE }}
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+            ${{ steps.go-env.outputs.gomodcache }}
+          # make hash target explicit to the backend folder
+          key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
 
