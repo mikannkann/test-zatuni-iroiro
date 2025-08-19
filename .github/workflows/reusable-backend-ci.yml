@@ -23,6 +23,8 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.24
+          cache: true
+          cache-dependency-path: backend/go.sum
 
       - name: Go Mod Tidy
         run: go mod tidy
@@ -48,53 +50,16 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.24
+          cache: true
+          cache-dependency-path: backend/go.sum
 
-      - name: Dump Go environment and workspace (debug)
-        id: go-env
+      - name: Print Go cache paths (debug)
         run: |
-          echo "PWD: $(pwd)"
-          echo "Listing repo root"
-          ls -la .. || true
-          echo "Listing current dir"
-          ls -la || true
-          echo "go version: $(go version)"
-          echo "GOMOD: $(go env GOMOD)"
-          echo "GOMODCACHE: $(go env GOMODCACHE)"
-          echo "GOCACHE: $(go env GOCACHE)"
-          echo "gomodcache=$(go env GOMODCACHE)" >> $GITHUB_OUTPUT
-          echo "gocache=$(go env GOCACHE)" >> $GITHUB_OUTPUT
+          echo "GOMODCACHE=$(go env GOMODCACHE)"
+          echo "GOCACHE=$(go env GOCACHE)"
 
       - name: Go Mod Tidy
         run: go mod tidy
-
-      - name: Debug computed cache key
-        run: |
-          echo "hashFiles('backend/go.sum') = '${{ hashFiles('backend/go.sum') }}'"
-          echo "hashFiles('**/go.sum') = '${{ hashFiles('**/go.sum') }}'"
-          echo "Computed key (backend): ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}"
-
-      - name: List GOMODCACHE before caching (debug)
-        run: |
-          echo "GOMODCACHE = ${{ steps.go-env.outputs.gomodcache }}"
-          if [ -d "${{ steps.go-env.outputs.gomodcache }}" ]; then
-            echo "Listing top-level of GOMODCACHE"
-            ls -la "${{ steps.go-env.outputs.gomodcache }}" | head -n 50 || true
-            echo "Count files:"
-            find "${{ steps.go-env.outputs.gomodcache }}" -maxdepth 2 -type f | wc -l || true
-          else
-            echo "GOMODCACHE dir does not exist"
-          fi
-
-      - name: Cache Go modules
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/go-build
-            ${{ steps.go-env.outputs.gomodcache }}
-          key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
 
       - name: Build
         run: go build ./...
