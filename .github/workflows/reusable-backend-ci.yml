@@ -49,20 +49,14 @@ jobs:
         with:
           go-version: 1.24
 
-      - name: Prepare Go env for cache
-        run: |
-          # Export GOMODCACHE so the cache step can reference it
-          echo "GOMODCACHE=$(go env GOMODCACHE)" >> $GITHUB_ENV
-
       - name: Cache Go modules
         uses: actions/cache@v4
         with:
           path: |
             ~/.cache/go-build
-            # GOMODCACHE default (set in previous step)
+            # GOMODCACHE default
             ${{ env.GOMODCACHE }}
-          # Hash the backend/go.sum explicitly so the cache action can find it
-          key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
 
