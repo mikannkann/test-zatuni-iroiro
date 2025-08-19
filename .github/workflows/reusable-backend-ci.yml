@@ -23,6 +23,8 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.24
+          cache: true
+          cache-dependency-path: backend/go.sum
 
       - name: Go Mod Tidy
         run: go mod tidy
@@ -48,17 +50,13 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.24
+          cache: true
+          cache-dependency-path: backend/go.sum
 
-      - name: Cache Go modules
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/go-build
-            # GOMODCACHE default
-            ${{ env.GOMODCACHE }}
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+      - name: Print Go cache paths (debug)
+        run: |
+          echo "GOMODCACHE=$(go env GOMODCACHE)"
+          echo "GOCACHE=$(go env GOCACHE)"
 
       - name: Go Mod Tidy
         run: go mod tidy
