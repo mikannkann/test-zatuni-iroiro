@@ -38,8 +38,6 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
 
       - name: Install Dependencies
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
@@ -78,8 +76,6 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
 
       - name: Install Dependencies
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
