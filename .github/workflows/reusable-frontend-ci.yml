@@ -2,11 +2,6 @@ name: Frontend CI
 
 on:
   workflow_call:
-    inputs:
-      skip_lint:
-        type: boolean
-        required: false
-        default: false
   workflow_dispatch:
 
 permissions:
@@ -36,15 +31,9 @@ jobs:
         run: npm ci
 
       - name: Format Check
-        if: ${{ !inputs.skip_lint }}
         run: npm run format:check
 
-      - name: Lint / Format Skip notice
-        if: ${{ inputs.skip_lint }}
-        run: echo "skip-lint を含むラベルが付与されているため format/lint をスキップしました"
-
       - name: Lint Check
-        if: ${{ !inputs.skip_lint }}
         run: npm run lint:ci
 
   build:

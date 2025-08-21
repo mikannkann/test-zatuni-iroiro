@@ -21,7 +21,6 @@ jobs:
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       backend: ${{ steps.filter.outputs.backend }}
-      # skip_lint: ${{ steps.compute-skip-lint.outputs.value }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,26 +37,12 @@ jobs:
               - "backend/**"
               - ".github/workflows/reusable-backend-ci.yml"
 
-      # - name: Compute skip-lint flag (only true when PR has 'skip-lint' label)
-      #   id: compute-skip-lint
-      #   env:
-      #     IS_PR: ${{ github.event_name == 'pull_request' }}
-      #     HAS_SKIP_LINT_LABEL: ${{ contains(join(github.event.pull_request.labels.*.name, ','), 'skip-lint') }}
-      #   run: |
-      #     if [[ "$IS_PR" == "true" && "$HAS_SKIP_LINT_LABEL" == "true" ]]; then
-      #       echo "value=true" >> "$GITHUB_OUTPUT"
-      #     else
-      #       echo "value=false" >> "$GITHUB_OUTPUT"
-      #     fi
-
   # フロントエンドCIを呼び出すジョブ
   frontend-ci:
     name: Frontend CI
     needs: changes
     if: needs.changes.outputs.frontend == 'true'
     uses: ./.github/workflows/reusable-frontend-ci.yml
-    # with:
-    #   skip_lint: ${{ needs.changes.outputs.skip_lint }}
 
   # バックエンドCIを呼び出すジョブ
   backend-ci:
@@ -65,8 +50,6 @@ jobs:
     needs: changes
     if: needs.changes.outputs.backend == 'true'
     uses: ./.github/workflows/reusable-backend-ci.yml
-    # with:
-    #   skip_lint: ${{ needs.changes.outputs.skip_lint }}
 
   # 必須チェックとして登録するためのジョブ
   required-checks:

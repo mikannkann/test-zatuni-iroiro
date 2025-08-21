@@ -2,11 +2,6 @@ name: Backend CI
 
 on:
   workflow_call:
-    inputs:
-      skip_lint:
-        type: boolean
-        required: false
-        default: false
   workflow_dispatch:
 
 permissions:
