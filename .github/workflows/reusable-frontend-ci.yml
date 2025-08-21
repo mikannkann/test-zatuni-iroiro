@@ -62,16 +62,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Compute cache key hash
-        id: compute-cache-hash
-        run: |
-          if [ -f package-lock.json ]; then
-            HASH=$(sha256sum package-lock.json | awk '{print $1}')
-          else
-            HASH=missing
-          fi
-          echo "cache-hash=$HASH" >> $GITHUB_OUTPUT
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -84,7 +74,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: frontend/node_modules
-          key: node-cache-${{ runner.os }}-x64-npm-${{ steps.compute-cache-hash.outputs.cache-hash }}
+          key: node-cache-${{ runner.os }}-x64-npm-${{ hashFiles('**/package-lock.json') }}
           
       - name: Install Dependencies
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
