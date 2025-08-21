@@ -14,7 +14,7 @@ jobs:
   changes:
     name: Detect Changes
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       backend: ${{ steps.filter.outputs.backend }}
@@ -59,7 +59,7 @@ jobs:
     name: Required Checks
     needs: [changes, frontend-ci, backend-ci]
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     if: always()
     steps:
       - name: Verify CI results
