@@ -31,14 +31,9 @@ jobs:
         run: go mod tidy
 
       - name: Lint (golangci-lint)
-        # if: ${{ !inputs.skip_lint }}
         uses: golangci/golangci-lint-action@v8.0.0
         with:
           working-directory: backend
-
-      # - name: Skip notice
-      #   if: ${{ inputs.skip_lint }}
-      #   run: echo "skip-lint を含むラベルが付与されているため golangci-lint をスキップしました"
 
   build:
     name: Build
@@ -54,11 +49,6 @@ jobs:
           go-version: 1.24
           cache: true
           cache-dependency-path: backend/go.sum
-
-      - name: Print Go cache paths (debug)
-        run: |
-          echo "GOMODCACHE=$(go env GOMODCACHE)"
-          echo "GOCACHE=$(go env GOCACHE)"
 
       - name: Go Mod Tidy
         run: go mod tidy
