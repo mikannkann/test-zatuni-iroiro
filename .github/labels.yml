@@ -64,6 +64,6 @@
   description: "有識者や先輩の助けが必要"
 
 # Actions: アクション
-- name: "action: skip-lint"
-  color: "E99695"
-  description: "CI上でのLinterチェックをスキップ"
+# - name: "action: skip-lint"
+#   color: "E99695"
+#   description: "CI上でのLinterチェックをスキップ"
