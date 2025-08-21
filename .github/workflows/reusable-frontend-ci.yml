@@ -2,6 +2,11 @@ name: Frontend CI
 
 on:
   workflow_call:
+    inputs:
+      skip_lint:
+        type: boolean
+        required: false
+        default: false
   workflow_dispatch:
 
 permissions:
@@ -15,6 +20,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,20 +36,21 @@ jobs:
         run: npm ci
 
       - name: Format Check
-        if: ${{ github.event_name != 'pull_request' || !contains(join(github.event.pull_request.labels.*.name, ','), 'skip-lint') }}
+        if: ${{ !inputs.skip_lint }}
         run: npm run format:check
 
       - name: Lint / Format Skip notice
-        if: ${{ github.event_name == 'pull_request' && contains(join(github.event.pull_request.labels.*.name, ','), 'skip-lint') }}
+        if: ${{ inputs.skip_lint }}
         run: echo "skip-lint を含むラベルが付与されているため format/lint をスキップしました"
 
       - name: Lint Check
-        if: ${{ github.event_name != 'pull_request' || !contains(join(github.event.pull_request.labels.*.name, ','), 'skip-lint') }}
+        if: ${{ !inputs.skip_lint }}
         run: npm run lint:ci
 
   build:
     name: Build
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
