@@ -76,8 +76,8 @@ jobs:
       - name: Compute cache key hash
         id: compute-cache-hash
         run: |
-          if [ -f frontend/package-lock.json ]; then
-            HASH=$(sha256sum frontend/package-lock.json | awk '{print $1}')
+          if [ -f package-lock.json ]; then
+            HASH=$(sha256sum package-lock.json | awk '{print $1}')
           else
             HASH=missing
           fi
