@@ -25,6 +25,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Compute cache key hash
+        id: compute-cache-hash
+        run: |
+          if [ -f frontend/package-lock.json ]; then
+            HASH=$(sha256sum frontend/package-lock.json | awk '{print $1}')
+          else
+            HASH=missing
+          fi
+          echo "cache-hash=$HASH" >> $GITHUB_OUTPUT
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -37,7 +47,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ steps.compute-cache-hash.outputs.cache-hash }}
 
       - name: Install Dependencies
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
@@ -63,6 +73,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Compute cache key hash
+        id: compute-cache-hash
+        run: |
+          if [ -f frontend/package-lock.json ]; then
+            HASH=$(sha256sum frontend/package-lock.json | awk '{print $1}')
+          else
+            HASH=missing
+          fi
+          echo "cache-hash=$HASH" >> $GITHUB_OUTPUT
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -75,7 +95,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ steps.compute-cache-hash.outputs.cache-hash }}
 
       - name: Install Dependencies
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
