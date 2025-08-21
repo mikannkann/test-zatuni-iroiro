@@ -12,8 +12,8 @@ defaults:
     working-directory: frontend
 
 jobs:
-  install:
-    name: Install Dependencies
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -30,32 +30,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Upload node_modules
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-modules
-          path: frontend/node_modules
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: install
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: frontend/package.json
-      
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node-modules
-          path: frontend/node_modules
-
       - name: Format Check
         run: npm run format:check
 
@@ -66,7 +40,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: install
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,12 +48,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: frontend/package.json
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node-modules
-          path: frontend/node_modules
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Build
         run: npm run build
