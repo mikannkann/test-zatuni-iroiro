@@ -25,16 +25,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Compute cache key hash
-        id: compute-cache-hash
-        run: |
-          if [ -f package-lock.json ]; then
-            HASH=$(sha256sum package-lock.json | awk '{print $1}')
-          else
-            HASH=missing
-          fi
-          echo "cache-hash=$HASH" >> $GITHUB_OUTPUT
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -42,15 +32,7 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Restore node_modules cache
-        id: node-modules-cache
-        uses: actions/cache@v4
-        with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-modules-${{ steps.compute-cache-hash.outputs.cache-hash }}
-
       - name: Install Dependencies
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Format Check
@@ -73,16 +55,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Compute cache key hash
-        id: compute-cache-hash
-        run: |
-          if [ -f package-lock.json ]; then
-            HASH=$(sha256sum package-lock.json | awk '{print $1}')
-          else
-            HASH=missing
-          fi
-          echo "cache-hash=$HASH" >> $GITHUB_OUTPUT
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -90,15 +62,7 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Restore node_modules cache
-        id: node-modules-cache
-        uses: actions/cache@v4
-        with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-modules-${{ steps.compute-cache-hash.outputs.cache-hash }}
-
       - name: Install Dependencies
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build

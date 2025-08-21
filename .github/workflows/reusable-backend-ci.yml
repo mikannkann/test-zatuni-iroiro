@@ -36,14 +36,14 @@ jobs:
         run: go mod tidy
 
       - name: Lint (golangci-lint)
-        if: ${{ !inputs.skip_lint }}
+        # if: ${{ !inputs.skip_lint }}
         uses: golangci/golangci-lint-action@v8.0.0
         with:
           working-directory: backend
 
-      - name: Skip notice
-        if: ${{ inputs.skip_lint }}
-        run: echo "skip-lint を含むラベルが付与されているため golangci-lint をスキップしました"
+      # - name: Skip notice
+      #   if: ${{ inputs.skip_lint }}
+      #   run: echo "skip-lint を含むラベルが付与されているため golangci-lint をスキップしました"
 
   build:
     name: Build
