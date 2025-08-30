@@ -62,7 +62,7 @@ jobs:
     if: >-
       github.event.action == 'opened' &&
       endsWith(github.actor, '[bot]') == false &&
-      ${{(github.event.pull_request.assignees | length)}} == 0
+      ${{ toJSON(github.event.pull_request.assignees) == '[]' }}
     runs-on: ubuntu-latest
     steps:
       - name: Add event actor to assignees
