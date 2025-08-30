@@ -65,6 +65,7 @@ jobs:
       - name: Add event actor to assignees
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           ASSIGNEE_COUNT=$(gh pr view $PR_NUMBER --json assignees --jq '(.assignees | length)')
