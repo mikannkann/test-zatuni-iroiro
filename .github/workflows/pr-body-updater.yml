@@ -6,7 +6,6 @@ on:
 
 permissions:
   pull-requests: write
-  # repository-projects: read
 
 jobs:
   add-issue-reference:
@@ -59,8 +58,8 @@ jobs:
   auto-assign:
     name: Assign
     if: >-
-      endsWith(github.actor, '[bot]') == false &&
-      github.event.action == 'opened'
+      github.event.action == 'opened' &&
+      endsWith(github.actor, '[bot]') == false
     runs-on: ubuntu-latest
     steps:
       - name: Add event actor to assignees
