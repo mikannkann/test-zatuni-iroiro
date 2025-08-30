@@ -59,6 +59,7 @@ jobs:
     if: >-
       github.event.action == 'opened' &&
       endsWith(github.actor, '[bot]') == false
+    timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
       - name: Add event actor to assignees
