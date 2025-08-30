@@ -56,7 +56,6 @@ jobs:
           gh pr edit "$PR_NUMBER" --body "$UPDATED_BODY"
 
   auto-assign:
-    name: Assign
     if: >-
       github.event.action == 'opened' &&
       endsWith(github.actor, '[bot]') == false
