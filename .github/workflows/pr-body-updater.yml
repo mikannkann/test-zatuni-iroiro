@@ -58,7 +58,7 @@ jobs:
 
   auto-assign:
     name: Assign
-    if: endsWith(github.actor, '[bot]') == false && github.event.pull_request.assignee == null
+    if: endsWith(github.actor, '[bot]') == false && github.event.pull_request.assignee == null && github.event.action == 'opened'
     runs-on: ubuntu-latest
     steps:
       - name: Add event actor to assignees
