@@ -1,0 +1,57 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/backend"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore"
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - "type: dependencies"
+      - "area: backend"
+
+  - package-ecosystem: "docker"
+    directory: "/backend"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore"
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - "type: dependencies"
+      - "area: infra"
+
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore"
+    pull-request-branch-name:
+      separator: "-"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+    labels:
+      - "type: dependencies"
+      - "area: frontend"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore"
+    pull-request-branch-name:
+      separator: "-"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+    labels:
+      - "type: dependencies"
+      - "area: infra"

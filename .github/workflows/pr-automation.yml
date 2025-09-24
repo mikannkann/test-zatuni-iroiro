@@ -1,0 +1,94 @@
+name: PR Automation
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+  issues: read
+
+jobs:
+  setup-pr:
+    # if: github.repository == 'traP-jp/1m25_10'
+    timeout-minutes: 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Extract issue number from branch name
+        id: extract_issue
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [[ $BRANCH_NAME =~ ^[a-zA-Z0-9]+/([0-9]+)- ]]; then
+            ISSUE_NUMBER=${BASH_REMATCH[1]}
+            echo "Issue number extracted: $ISSUE_NUMBER"
+            echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+          else
+            echo "Branch name '${BRANCH_NAME}' does not follow the expected format '<prefix>/<number>-<description>'. Skipping issue extraction."
+            echo "issue_number=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update PR Description
+        if: steps.extract_issue.outputs.issue_number
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
+          REPO: ${{ github.repository }}
+        run: |
+          CURRENT_BODY=$(gh pr view "$PR_NUMBER" --json body --jq .body)
+
+          if [[ "$CURRENT_BODY" == *"#${ISSUE_NUMBER}"* ]]; then
+            echo "PR body already contains '#${ISSUE_NUMBER}'. No update needed."
+            exit 0
+          fi
+
+          CLOSES_TEXT="Closes #${ISSUE_NUMBER}"
+
+          if [ -z "$CURRENT_BODY" ]; then
+            UPDATED_BODY="$CLOSES_TEXT"
+          else
+            UPDATED_BODY="$(printf '%s\n\n---\n%s' "$CURRENT_BODY" "$CLOSES_TEXT")"
+          fi
+
+      - name: Add labels from issue
+        if: steps.extract_issue.outputs.issue_number
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
+          TARGET_LABEL_PATTERN: "^(?:type|area|priority):[[:space:]]*"
+        run: |
+          ISSUE_LABELS=$(gh issue view "$ISSUE_NUMBER" --json labels --jq '[.labels[].name] | join(",")')
+
+          if [ -z "$ISSUE_LABELS" ]; then
+            echo "No labels found on issue #${ISSUE_NUMBER}. Skipping."
+            exit 0
+          fi
+
+          TARGET_LABELS=$(echo "$ISSUE_LABELS" | tr ',' '\n' | { grep -E "$TARGET_LABEL_PATTERN" || true; } | tr '\n' ',' | sed 's/,$//')
+
+          if [ -z "$TARGET_LABELS" ]; then
+            echo "No target labels (matching '${TARGET_LABEL_PATTERN}') found on issue #${ISSUE_NUMBER}. Skipping."
+          else
+            echo "Adding labels ($TARGET_LABELS) from issue #${ISSUE_NUMBER} to PR #${PR_NUMBER}."
+            gh pr edit "$PR_NUMBER" --add-label "$TARGET_LABELS"
+          fi
+
+      - name: Add event actor to assignees
+        if: endsWith(github.actor, '[bot]') == false
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          ASSIGNEE_COUNT=$(gh pr view "$PR_NUMBER" --json assignees --jq '(.assignees | length)')
+
+          if [ "$ASSIGNEE_COUNT" -eq 0 ]; then
+            echo "No assignees found. Assigning the author: ${{ github.actor }}"
+            gh pr edit "$PR_NUMBER" --add-assignee "${{ github.actor }}"
+          else
+            echo "This PR already has $ASSIGNEE_COUNT assignee(s). Skipping."
+          fi
